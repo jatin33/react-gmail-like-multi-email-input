@@ -1,0 +1,18 @@
+.Tag-Base {
+  border-radius: 0.375rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  display: flex;
+  column-gap: 0.75rem;
+  align-items: center;
+}
+
+.Valid {
+  border: 1px solid #424242;
+}
+
+.InValid {
+  background-color: #ffb2b2;
+}
