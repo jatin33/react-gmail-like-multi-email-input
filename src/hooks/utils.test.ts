@@ -19,4 +19,9 @@ describe("isFalsy function helper", () => {
   test("when input is empty array", () => {
     expect(isFalsy([])).toEqual(true);
   });
+  test("when input is undefined", () => {
+    expect(isFalsy(null)).toEqual(true);
+  });
+
 });
+
