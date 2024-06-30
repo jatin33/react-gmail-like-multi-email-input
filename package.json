@@ -7,11 +7,12 @@
     "build"
   ],
   "scripts": {
-    "build": "rollup -c --bundleConfigAsCjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
-    "release": "npm run build && npm publish"
+    "changeset": "changeset",
+    "prerelease": "rollup -c --bundleConfigAsCjs",
+    "release": "changeset publish"
   },
   "author": "",
   "license": "ISC",
@@ -52,5 +53,8 @@
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -7,23 +7,25 @@ on:
 
 jobs:
   release:
+    # IMPORTANT: prevent this action from running on forks
+    if: github.repository == 'jatin33/react-gmail-like-multi-email-input'
+    permissions:
+      contents: write # to create release (changesets/action)
+      pull-requests: write # to create pull request (changesets/action)
     name: release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-        with:
-          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
-          fetch-depth: 0
-
-      - uses: actions/setup-node@master
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18.x
 
-      - run: npm i
+      - run: npm ci
       - run: npm run test
 
-      - id: changesets
-        uses: changesets/action@master
+      - name: Publish to npm
+        id: changesets
+        uses: changesets/action@v1
         with:
           # This expects you to have a script called release which does a build for your packages and calls changeset publish
           publish: npm run release
