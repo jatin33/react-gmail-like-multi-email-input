@@ -12,7 +12,8 @@
     "test": "jest",
     "changeset": "changeset",
     "prerelease": "rollup -c --bundleConfigAsCjs",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "chromatic": "npx chromatic --project-token=chpt_6e4193d6574c7e9"
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +37,7 @@
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
+    "chromatic": "^11.5.6",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
     "jest-css-modules-transform": "^4.4.2",

@@ -24,9 +24,7 @@ function Tag({ email, emailIndexPosition, isDisabled, showRemoveIcon = true, onR
 
   return (
     <div className={getStyles()}>
-      <div>
-        <p>{email}</p>
-      </div>
+      <span>{email}</span>
       {showRemoveIcon ? (
         <button
           onClick={() => {
