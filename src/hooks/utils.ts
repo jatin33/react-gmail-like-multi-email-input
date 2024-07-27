@@ -1,10 +1,10 @@
-const isFalsy = (value: any): boolean => {
+const isFalsy = <T>(value: T): boolean => {
   return (
-    value === "" ||
+    value === '' ||
     value === null ||
     value === undefined ||
     (Array.isArray(value) && value.length === 0) ||
-    (typeof value === "object" && Object.keys(value).length === 0)
+    (typeof value === 'object' && Object.keys(value).length === 0)
   );
 };
 
@@ -19,14 +19,14 @@ const isEmail = (email: string): boolean => {
 
 // Function to escape special characters in a delimiter
 function escapeRegExp(delimiter: string): string {
-  return delimiter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape special characters
+  return delimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special characters
 }
 
 // Function to create a regular expression from an array of delimiters
 function createSplitRegExp(delimiters: string[]): RegExp {
   // Escape each delimiter and join them with '|'
-  const escapedDelimiters = delimiters.map(escapeRegExp).join("|");
-  return new RegExp(escapedDelimiters, "g"); // Create a global regular expression
+  const escapedDelimiters = delimiters.map(escapeRegExp).join('|');
+  return new RegExp(escapedDelimiters, 'g'); // Create a global regular expression
 }
 
 function uniq<T>(array: T[]): T[] {

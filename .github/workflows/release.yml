@@ -21,6 +21,8 @@ jobs:
           node-version: 18.x
 
       - run: npm ci
+      - run: npm run lint
+      - run: npm run format
       - run: npm run test
 
       - name: Publish to npm

@@ -1,3 +1,3 @@
-import useEmailInput from "./hooks/useMultiEmailInput";
+import useEmailInput from './hooks/useMultiEmailInput';
 
 export { useEmailInput };

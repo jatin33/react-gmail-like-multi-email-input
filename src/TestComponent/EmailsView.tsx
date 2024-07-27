@@ -1,25 +1,27 @@
-import React from "react";
-import { BaseMultiEmailProps } from "../hooks/types";
-import { isFalsy } from "../hooks/utils";
-import Tag from "./Tag";
+import React from 'react';
+import { BaseMultiEmailProps } from '../hooks/types';
+import { isFalsy } from '../hooks/utils';
+import Tag from './Tag';
 
 type ValidEmailsViewProps = {
   validEmails: string[];
   focused: boolean;
-  handleRemove: (emailId: string, emailIndexPosition: number, isDisabled?: boolean | undefined) => void;
-} & Pick<BaseMultiEmailProps, "getLabel" | "isDisabled" | "validEmailsToShowOnblurCount">;
+  handleRemove: (
+    emailId: string,
+    emailIndexPosition: number,
+    isDisabled?: boolean | undefined
+  ) => void;
+} & Pick<
+  BaseMultiEmailProps,
+  'getLabel' | 'isDisabled' | 'validEmailsToShowOnblurCount'
+>;
 
 function EmailsView({
   validEmails,
   isDisabled,
-  focused,
-  validEmailsToShowOnblurCount,
   getLabel,
   handleRemove,
 }: ValidEmailsViewProps) {
-  // const validEmailsToShow = validEmails;
-  // const remainingEmailsToShowCount = validEmails?.length - (validEmailsToShowOnblurCount ?? 0);
-
   return validEmails && validEmails?.length > 0 ? (
     <>
       {validEmails?.map((validEmail, index) => {

@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { createSplitRegExp, isFalsy, uniq } from "./utils";
-import { BaseMultiEmailProps } from "./types";
+import React, { useEffect, useState } from 'react';
+import { createSplitRegExp, isFalsy, uniq } from './utils';
+import { BaseMultiEmailProps } from './types';
+
+interface ClipboardData {
+  getData: (format: string) => string;
+}
 
 function useEmailInput({
   emails = [],
@@ -11,21 +15,24 @@ function useEmailInput({
   onEmailChange,
   onInputChange,
 }: BaseMultiEmailProps) {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [emailsState, setEmailsState] = useState<string[]>([]);
   const [focused, setFocused] = useState(false);
 
-  const handleRemove = (emailId: string, emailIndexPosition: number, _isDisabled?: boolean) => {
+  const handleRemove = (emailId: string, emailIndexPosition: number) => {
     if (isDisabled) {
       return;
     }
-    const filteredEmails = [...emailsState.slice(0, emailIndexPosition), ...emailsState.slice(emailIndexPosition + 1)];
+    const filteredEmails = [
+      ...emailsState.slice(0, emailIndexPosition),
+      ...emailsState.slice(emailIndexPosition + 1),
+    ];
     setEmailsState(filteredEmails);
     onEmailChange?.(filteredEmails);
   };
 
   const addEmail = (email?: string) => {
-    const formattedEmail = email?.trim() ?? "";
+    const formattedEmail = email?.trim() ?? '';
     if (!isFalsy(formattedEmail)) {
       setEmailsState((s) => {
         if (duplicateAllowed) {
@@ -35,15 +42,15 @@ function useEmailInput({
         onEmailChange?.(uniq([...s, formattedEmail]));
         return uniq([...s, formattedEmail]);
       });
-      setInputValue("");
+      setInputValue('');
     }
   };
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if ([" ", "Enter"].includes(event.key)) {
+    if ([' ', 'Enter'].includes(event.key)) {
       event.preventDefault();
-    } else if (event.key === "Backspace") {
-      if (inputValue === "" && !isDisabled) {
+    } else if (event.key === 'Backspace') {
+      if (inputValue === '' && !isDisabled) {
         handleRemove(inputValue, emailsState.length - 1);
       }
     } else if (delimiters.includes(event.key)) {
@@ -53,14 +60,16 @@ function useEmailInput({
 
   // when enter, tab, space and delimiters (,) are fired after that add email
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if ([" ", "Enter"].includes(event.key)) {
+    if ([' ', 'Enter'].includes(event.key)) {
       addEmail(inputValue);
     } else if (delimiters.includes(event.key)) {
       addEmail(inputValue);
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const currentEventValue = event.currentTarget.value;
     setInputValue(currentEventValue);
     onInputChange?.(event);
@@ -72,22 +81,26 @@ function useEmailInput({
   };
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-    let pastedItem = (event.clipboardData || (window as any)?.clipboardData)?.getData("text") ?? "";
+    const clipboardData: ClipboardData | null =
+      (event.clipboardData as ClipboardData) ||
+      (window as unknown as { clipboardData?: ClipboardData }).clipboardData ||
+      null;
+    const pastedItem = clipboardData?.getData('text') ?? '';
     const splitRegExp: RegExp = createSplitRegExp(delimiters);
     pastedItem
       .split(splitRegExp)
-      .filter((item) => item !== "")
+      .filter((item) => item !== '')
       .forEach((item) => {
         addEmail(item);
       });
 
-    let id = setTimeout(() => {
-      setInputValue("");
+    const id = setTimeout(() => {
+      setInputValue('');
       clearTimeout(id);
     }, 50);
   };
 
-  const handleFocus = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+  const handleFocus = () => {
     setFocused(true);
   };
 
@@ -97,7 +110,9 @@ function useEmailInput({
     }
   }, [emails]);
 
-  const validEmailsToShow = !focused ? emailsState.slice(0, validEmailsToShowOnblurCount) : emailsState;
+  const validEmailsToShow = !focused
+    ? emailsState.slice(0, validEmailsToShowOnblurCount)
+    : emailsState;
 
   return {
     handleChange,
