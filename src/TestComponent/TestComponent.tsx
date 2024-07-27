@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
-import useEmailInput from "../hooks/useMultiEmailInput";
-import ValidEmailsView from "./EmailsView";
-import { MultiEmailInputProps } from "../hooks/types";
-import { isFalsy } from "../hooks/utils";
-import "./TestComponent.css";
+import React, { useRef } from 'react';
+import useEmailInput from '../hooks/useMultiEmailInput';
+import ValidEmailsView from './EmailsView';
+import { MultiEmailInputProps } from '../hooks/types';
+import { isFalsy } from '../hooks/utils';
+import './TestComponent.css';
 
 function TestComponent({
   emails = [],
@@ -11,7 +11,7 @@ function TestComponent({
   getLabel,
   onEmailChange,
   duplicateAllowed,
-  delimiters = [",", ";"],
+  delimiters = [',', ';'],
   adornment,
   validEmailsToShowOnblurCount = 3,
   error,
@@ -42,7 +42,7 @@ function TestComponent({
   return (
     <>
       <div
-        className={`container ${emailsState.length > 0 ? "items-start" : "items-end"}`}
+        className={`container ${emailsState.length > 0 ? 'items-start' : 'items-end'}`}
         onClick={() => emailInputRef.current?.focus()}
       >
         {!isFalsy(adornment?.start) ? adornment?.start : <p>To:</p>}
@@ -75,7 +75,7 @@ function TestComponent({
               }}
               onFocus={(e) => {
                 inputBaseProps?.onFocus?.(e);
-                handleFocus(e);
+                handleFocus();
               }}
               value={inputValue}
               className={`input-field ${inputBaseProps.className}`}
@@ -88,7 +88,9 @@ function TestComponent({
       </div>
       {error ? (
         <div className="gb-flex gb-items-center gb-gap-x-1 gb-pt-1">
-          <p className="gb-italic gb-text-gbTokens-error-500">{helperText ?? "Email id entered is invalid"}</p>
+          <p className="gb-italic gb-text-gbTokens-error-500">
+            {helperText ?? 'Email id entered is invalid'}
+          </p>
         </div>
       ) : null}
     </>
